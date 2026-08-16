@@ -1,0 +1,73 @@
+// ============================================================
+// Pipeline Tools Shelf
+// Maya Pipeline Tools
+// ============================================================
+
+global proc createPipelineToolsShelf()
+{
+    string $shelfName = "PipelineTools";
+
+    // Delete existing shelf if it exists
+    if (`shelfLayout -exists $shelfName`)
+    {
+        deleteUI $shelfName;
+    }
+
+    // Create shelf
+    shelfLayout $shelfName;
+
+
+    // --------------------------------------------------------
+    // Asset Review Tool
+    // --------------------------------------------------------
+
+    shelfButton
+        -parent $shelfName
+        -label "Asset Review"
+        -annotation "Review model from multiple views"
+        -image1 "assetReview.png"
+        -command "python(\"import asset_review; asset_review.show()\")";
+
+
+    // --------------------------------------------------------
+    // UV Export Tool
+    // --------------------------------------------------------
+
+    shelfButton
+        -parent $shelfName
+        -label "UV Export"
+        -annotation "Clean duplicate UVs and export"
+        -image1 "uvExport.png"
+        -command "python(\"import uv_export; uv_export.show()\")";
+
+
+    // --------------------------------------------------------
+    // Remove Unused Nodes
+    // --------------------------------------------------------
+
+    shelfButton
+        -parent $shelfName
+        -label "Unused Nodes"
+        -annotation "Remove unused nodes from the scene"
+        -image1 "unusedNodes.png"
+        -command "python(\"import remove_unused_nodes; remove_unused_nodes.remove_unused_nodes()\")";
+
+
+    // --------------------------------------------------------
+    // Remove Unused Plugins
+    // --------------------------------------------------------
+
+    shelfButton
+        -parent $shelfName
+        -label "Unused Plugins"
+        -annotation "Find and unload unused plugins"
+        -image1 "unusedPlugins.png"
+        -command "python(\"import remove_unused_plugins; remove_unused_plugins.remove_unused_plugins()\")";
+
+
+    print("Pipeline Tools shelf created successfully.\\n");
+}
+
+
+// Create shelf
+createPipelineToolsShelf();
